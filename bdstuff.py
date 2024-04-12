@@ -1,5 +1,6 @@
 import sqlite3 as s3
 
+
 def create_table():
     connection = s3.connect("buildings.db")
     cursor = connection.cursor()
@@ -17,11 +18,10 @@ def create_table():
     """)
     connection.commit()
     connection.close()
-    return True
 
 
-def search_tags(disabs="", type="",
-                name="", district="", 
+def search_tags(disabs="", ty="",
+                name="", district="",
                 b_num=""):
     connection = s3.connect("buildings.db")
     cursor = connection.cursor()
@@ -35,8 +35,9 @@ def search_tags(disabs="", type="",
     ;
     """)
     connection.commit()
+    rows = cursor.fetchall()
     connection.close()
-    return cursor.fetchall()
+    return rows
 
 
 def view_all():
@@ -45,11 +46,12 @@ def view_all():
     cursor.execute("""
     SELECT * FROM buildings""")
     connection.commit()
+    rows = cursor.fetchall()
     connection.close()
-    return cursor.fetchall()
+    return rows
 
 
-def insert_data(disabs="", type="", dis_feats="",
+def insert_data(disabs="", ty="", dis_feats="",
                 name="", district="", 
                 b_num="", gm=""):
     connection = s3.connect("buildings.db")
@@ -57,16 +59,19 @@ def insert_data(disabs="", type="", dis_feats="",
     cursor.execute("""
     INSERT INTO buildings VALUES(
                    NULL, ?, ?, ?, ?, ?, ?, ?
-    )""", [disabs, type, dis_feats, name, district, b_num, gm])
+    )""", [disabs, dis_feats, ty, name, district, b_num, gm])
     connection.commit()
     connection.close()
 
 
 create_table()
-insert_data(disabs="Нарушения умственного развития", type="Культура", dis_feats="".join(["Туалет для людей с инвалидностью", "Кнопка вызова персонала", "Пандус"]),
-            name="Школа-интернат 'Надежда'", district="Пр. Строителей",
-            b_num="58", gm="")
-
+# insert_data(disabs="ОДС", ty="Социальная сфера",
+#             dis_feats=", ".join(["Пандус"]),
+#             name="Молодёжная библиотека № 45", district="Пр. Шинников",
+#             b_num="44", gm="")
+for i in open("ergerggr.txt", encoding="UTF8"):
+    k = i.split(";")
+    insert_data(disabs=k[0], ty=k[1], dis_feats=k[2], name=k[3], district=k[4], b_num=k[5])
 
 # disabs:
 # Нарушения слуха
@@ -74,7 +79,7 @@ insert_data(disabs="Нарушения умственного развития",
 # Нарушения ОДС
 # Нарушения умственного развития
 
-# type:
+# ty:
 # Культура
 # Спорт
 # Образование
