@@ -65,13 +65,15 @@ def insert_data(disabs="", ty="", dis_feats="",
 
 
 create_table()
+for i in view_all():
+    print(*i, sep=";")
 # insert_data(disabs="ОДС", ty="Социальная сфера",
 #             dis_feats=", ".join(["Пандус"]),
 #             name="Молодёжная библиотека № 45", district="Пр. Шинников",
 #             b_num="44", gm="")
-for i in open("ergerggr.txt", encoding="UTF8"):
-    k = i.split(";")
-    insert_data(disabs=k[0], ty=k[1], dis_feats=k[2], name=k[3], district=k[4], b_num=k[5])
+# for i in open("ergerggr.txt", encoding="UTF8"):
+#     k = i.split(";")
+#     insert_data(disabs=k[0], ty=k[1], dis_feats=k[2], name=k[3], district=k[4], b_num=k[5])
 
 # disabs:
 # Нарушения слуха
