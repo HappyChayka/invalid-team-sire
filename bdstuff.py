@@ -33,7 +33,7 @@ def search_tags(disabs="", ty="",
                 district LIKE ? OR
                 b_num LIKE ?
     ;
-    """)
+    """, [disabs, ty, name, district, b_num])
     connection.commit()
     rows = cursor.fetchall()
     connection.close()
@@ -64,9 +64,10 @@ def insert_data(disabs="", ty="", dis_feats="",
     connection.close()
 
 
-create_table()
-for i in view_all():
-    print(*i, sep=";")
+if __name__ == "__main__":
+    create_table()
+    for i in search_tags(disabs="ОДС"):
+        print(i)
 # insert_data(disabs="ОДС", ty="Социальная сфера",
 #             dis_feats=", ".join(["Пандус"]),
 #             name="Молодёжная библиотека № 45", district="Пр. Шинников",
